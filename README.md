@@ -40,24 +40,24 @@ TravelBuddy is a full-stack web application built with **Python / Flask** that e
 
 | Feature | Description |
 |---|---|
-| 🔐 **User Authentication** | Register, login, logout with PBKDF2-SHA256 password hashing (Werkzeug) |
-| 🗺 **Group Trip Planning** | Create, view, and delete group trips with destination, date, and capacity |
-| 👥 **RSVP System** | Add and remove guests; duplicate and overbooking guards enforced at DB level |
-| 📊 **Dashboard** | Live stats: total trips, your trips, total RSVPs across all groups |
-| 🌍 **i18n / Localisation** | Full British English ↔ Brazilian Portuguese toggle (Flask-Babel) |
+| **User Authentication** | Register, login, logout with PBKDF2-SHA256 password hashing (Werkzeug) |
+| **Group Trip Planning** | Create, view, and delete group trips with destination, date, and capacity |
+| **RSVP System** | Add and remove guests; duplicate and overbooking guards enforced at DB level |
+| **Dashboard** | Live stats: total trips, your trips, total RSVPs across all groups |
+| **i18n / Localisation** | Full British English ↔ Brazilian Portuguese toggle (Flask-Babel) |
 
 ### New in v2
 
 | Feature | Description |
 |---|---|
-| ✈ **Flight Search** | Search and compare flights by origin, destination, dates, passengers, and cabin class |
-| 💳 **Secure Checkout** | Stripe Elements card tokenisation (PCI-DSS compliant). Raw card data never stored |
-| 📦 **Instalment Plans** | 1×, 2×, 3× (interest-free) and 6×, 12× payment plans selectable at checkout |
-| 🚫 **Cancellation Policy** | Automated refund logic: >72 h before departure = 80% refund; ≤72 h = no refund |
-| 💺 **Seat Selection** | Standard (free, assigned at check-in) or Premium (£10/pax, pre-selected at checkout) |
-| ✅ **Online Check-in** | Standard: 24 h before departure. Premium: 20 days before departure |
-| 🎫 **Boarding Pass** | Digital boarding pass with seat numbers, barcode, and full print support |
-| 🗺 **Destination Guides** | AI-generated travel guides with overview, attractions, nature, festivals, and local tips |
+| **Flight Search** | Search and compare flights by origin, destination, dates, passengers, and cabin class |
+| **Secure Checkout** | Stripe Elements card tokenisation (PCI-DSS compliant). Raw card data never stored |
+| **Instalment Plans** | 1×, 2×, 3× (interest-free) and 6×, 12× payment plans selectable at checkout |
+| **Cancellation Policy** | Automated refund logic: >72 h before departure = 80% refund; ≤72 h = no refund |
+| **Seat Selection** | Standard (free, assigned at check-in) or Premium (£10/pax, pre-selected at checkout) |
+| **Online Check-in** | Standard: 24 h before departure. Premium: 20 days before departure |
+| **Boarding Pass** | Digital boarding pass with seat numbers, barcode, and full print support |
+| **Destination Guides** | AI-generated travel guides with overview, attractions, nature, festivals, and local tips |
 
 ---
 
@@ -303,5 +303,6 @@ This project is released under the [MIT Licence](LICENSE).
 <div align="center">
   <sub>Built with ✈ for PRD 6300 · Saturday_Agile6301 · 2025–2026</sub>
 </div>
-#   T r a v e l _ B u d d y _ 2 0 2 6  
+#   T r a v e l _ B u d d y _ 2 0 2 6 (by SNB)
+ 
  
