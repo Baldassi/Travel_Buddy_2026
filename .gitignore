@@ -1,44 +1,36 @@
-# ── Environment & Secrets ────────────────────────────────────────────────────
-.env
-.env.*
-*.env
-!.env.example
-
-# ── Python ───────────────────────────────────────────────────────────────────
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.so
-*.egg
-*.egg-info/
-dist/
-build/
-.eggs/
-
-# ── Virtual Environment ───────────────────────────────────────────────────────
+ # Virtual environments
 venv/
 .venv/
 env/
-.env/
+ENV/
 
-# ── Database ─────────────────────────────────────────────────────────────────
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Flask instance
+instance/
+
+# Local databases
 *.db
 *.sqlite
 *.sqlite3
 
-# ── Testing & Coverage ────────────────────────────────────────────────────────
+# Pytest / coverage
 .pytest_cache/
 .coverage
+.coverage.*
 htmlcov/
-coverage.xml
-*.log
 
-# ── IDEs & Editors ────────────────────────────────────────────────────────────
+# Environment variables
+.env
+.env.*
+
+# IDEs
 .vscode/
 .idea/
-*.swp
-*.swo
-*~
+
+# OS files
 .DS_Store
 Thumbs.db
