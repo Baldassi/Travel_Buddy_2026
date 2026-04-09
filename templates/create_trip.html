@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}New Trip — TravelBuddy{% endblock %}
+{% block content %}
+
+<div class="form-page">
+  <a href="{{ url_for('trips.dashboard') }}" class="back-link">← {% if current_lang == 'pt_BR' %}Voltar{% else %}Back{% endif %}</a>
+
+  <h1 class="page-title">
+    {% if current_lang == 'pt_BR' %}Nova Viagem{% else %}Create a New Trip{% endif %} ✈
+  </h1>
+  <p class="page-sub">{% if current_lang == 'pt_BR' %}Planeie a sua próxima aventura{% else %}Plan your next adventure{% endif %}</p>
+
+  <form method="POST" action="{{ url_for('trips.create_trip') }}" class="card-form" novalidate>
+    <div class="field-group">
+      <label class="field-label" for="destination">
+        {% if current_lang == 'pt_BR' %}Destino{% else %}Destination{% endif %}
+      </label>
+      <input class="field-input" type="text" id="destination" name="destination"
+             placeholder="e.g. Lisbon, Portugal" required />
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="date">{% if current_lang == 'pt_BR' %}Data{% else %}Date{% endif %}</label>
+      <input class="field-input" type="date" id="date" name="date" required />
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="max_guests">
+        {% if current_lang == 'pt_BR' %}Máximo de Convidados{% else %}Max Guests{% endif %}
+      </label>
+      <input class="field-input" type="number" id="max_guests" name="max_guests" value="10" min="1" max="200" />
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="description">
+        {% if current_lang == 'pt_BR' %}Descrição{% else %}Description{% endif %}
+        <span class="label-optional">({% if current_lang == 'pt_BR' %}opcional{% else %}optional{% endif %})</span>
+      </label>
+      <textarea class="field-input field-textarea" id="description" name="description"
+                placeholder="Tell your crew about this trip..."></textarea>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">
+        {% if current_lang == 'pt_BR' %}Criar Viagem{% else %}Create Trip{% endif %} →
+      </button>
+      <a href="{{ url_for('trips.dashboard') }}" class="btn-ghost">
+        {% if current_lang == 'pt_BR' %}Cancelar{% else %}Cancel{% endif %}
+      </a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

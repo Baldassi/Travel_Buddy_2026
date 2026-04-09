@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TravelBuddy — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}" />
+</head>
+<body class="auth-body">
+
+<div class="auth-split">
+
+  <!-- LEFT PANEL — Brand / Hero -->
+  <div class="auth-hero">
+    <div class="hero-noise"></div>
+    <div class="hero-grid"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">GROUP TRAVEL, SIMPLIFIED</div>
+      <h1 class="hero-title">
+        Plan together.<br />
+        <em>Go everywhere.</em>
+      </h1>
+      <p class="hero-sub">
+        Coordinate trips, manage RSVPs, and bring your crew together — all in one place.
+      </p>
+
+      <div class="hero-destinations">
+        <span class="dest-tag">🗼 Paris</span>
+        <span class="dest-tag">🏔️ Lisbon</span>
+        <span class="dest-tag">🌊 Rio</span>
+        <span class="dest-tag">🏙️ Tokyo</span>
+        <span class="dest-tag">🌿 Edinburgh</span>
+      </div>
+    </div>
+
+    <div class="hero-footer">
+      <span class="stat-badge">✈ MVP 2026</span>
+      <span class="stat-badge">🌍 EN / PT-BR</span>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL — Auth form -->
+  <div class="auth-panel">
+
+    <div class="auth-lang-row">
+      {% for code, label in supported_languages.items() %}
+        <a href="{{ url_for('lang.set_language', lang=code) }}"
+           class="lang-btn {% if current_lang == code %}lang-btn--active{% endif %}">
+          {{ label }}
+        </a>
+      {% endfor %}
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack">
+          {% for category, message in messages %}
+            <div class="flash flash--{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="auth-form-wrap">
+      <div class="auth-mark">✈</div>
+      <h2 class="auth-heading">
+        {% if current_lang == 'pt_BR' %}Bem-vindo de volta{% else %}Welcome back{% endif %}
+      </h2>
+      <p class="auth-sub">
+        {% if current_lang == 'pt_BR' %}Entre na sua conta TravelBuddy{% else %}Sign in to your TravelBuddy account{% endif %}
+      </p>
+
+      <form method="POST" action="{{ url_for('auth.login') }}" class="auth-form" novalidate>
+        <div class="field-group">
+          <label class="field-label" for="username">
+            {% if current_lang == 'pt_BR' %}Utilizador{% else %}Username{% endif %}
+          </label>
+          <input class="field-input" type="text" id="username" name="username"
+                 placeholder="{% if current_lang == 'pt_BR' %}o seu utilizador{% else %}your username{% endif %}"
+                 required autocomplete="username" />
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="password">
+            {% if current_lang == 'pt_BR' %}Senha{% else %}Password{% endif %}
+          </label>
+          <input class="field-input" type="password" id="password" name="password"
+                 placeholder="{% if current_lang == 'pt_BR' %}a sua senha{% else %}your password{% endif %}"
+                 required autocomplete="current-password" />
+        </div>
+
+        <button type="submit" class="btn-primary btn-full">
+          {% if current_lang == 'pt_BR' %}Entrar{% else %}Sign In{% endif %}
+          <span class="btn-arrow">→</span>
+        </button>
+      </form>
+
+      <p class="auth-switch">
+        {% if current_lang == 'pt_BR' %}Novo por aqui?{% else %}New here?{% endif %}
+        <a href="{{ url_for('auth.register') }}">
+          {% if current_lang == 'pt_BR' %}Criar conta{% else %}Create an account{% endif %}
+        </a>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

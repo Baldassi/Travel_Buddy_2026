@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TravelBuddy — Register</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}" />
+</head>
+<body class="auth-body">
+
+<div class="auth-split">
+  <div class="auth-hero auth-hero--register">
+    <div class="hero-noise"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">JOIN THE COMMUNITY</div>
+      <h1 class="hero-title">Your next<br /><em>adventure</em><br />starts here.</h1>
+      <p class="hero-sub">Create your account and start planning group trips with friends and family.</p>
+    </div>
+    <div class="hero-footer">
+      <span class="stat-badge">✈ Free to join</span>
+      <span class="stat-badge">🌍 EN / PT-BR</span>
+    </div>
+  </div>
+
+  <div class="auth-panel">
+    <div class="auth-lang-row">
+      {% for code, label in supported_languages.items() %}
+        <a href="{{ url_for('lang.set_language', lang=code) }}"
+           class="lang-btn {% if current_lang == code %}lang-btn--active{% endif %}">{{ label }}</a>
+      {% endfor %}
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack">
+          {% for category, message in messages %}
+            <div class="flash flash--{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="auth-form-wrap">
+      <div class="auth-mark">🌍</div>
+      <h2 class="auth-heading">{% if current_lang == 'pt_BR' %}Criar conta{% else %}Create Account{% endif %}</h2>
+      <p class="auth-sub">{% if current_lang == 'pt_BR' %}Junte-se ao TravelBuddy hoje{% else %}Join TravelBuddy today{% endif %}</p>
+
+      <form method="POST" action="{{ url_for('auth.register') }}" class="auth-form" novalidate>
+        <div class="field-group">
+          <label class="field-label" for="username">{% if current_lang == 'pt_BR' %}Utilizador{% else %}Username{% endif %}</label>
+          <input class="field-input" type="text" id="username" name="username" placeholder="choose a username" required />
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="email">Email</label>
+          <input class="field-input" type="email" id="email" name="email" placeholder="you@example.com" required />
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="password">{% if current_lang == 'pt_BR' %}Senha{% else %}Password{% endif %}</label>
+          <input class="field-input" type="password" id="password" name="password" placeholder="at least 6 characters" required />
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="confirm_password">{% if current_lang == 'pt_BR' %}Confirmar Senha{% else %}Confirm Password{% endif %}</label>
+          <input class="field-input" type="password" id="confirm_password" name="confirm_password" placeholder="repeat password" required />
+        </div>
+        <button type="submit" class="btn-primary btn-full">
+          {% if current_lang == 'pt_BR' %}Criar conta{% else %}Create Account{% endif %}
+          <span class="btn-arrow">→</span>
+        </button>
+      </form>
+
+      <p class="auth-switch">
+        {% if current_lang == 'pt_BR' %}Já tem conta?{% else %}Already have an account?{% endif %}
+        <a href="{{ url_for('auth.login') }}">&nbsp;{% if current_lang == 'pt_BR' %}Entrar{% else %}Sign in{% endif %}</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

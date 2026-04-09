@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}{{ trip.destination }} — TravelBuddy{% endblock %}
+{% block content %}
+
+<div class="form-page">
+  <a href="{{ url_for('trips.dashboard') }}" class="back-link">← {% if current_lang == 'pt_BR' %}Voltar{% else %}Back{% endif %}</a>
+
+  <div class="trip-detail-header">
+    <div>
+      <h1 class="page-title">🌍 {{ trip.destination }}</h1>
+      <p class="page-sub">📅 {{ trip.date }} &nbsp;·&nbsp; by {{ trip.owner.username }}</p>
+      {% if trip.description %}<p class="trip-full-desc">{{ trip.description }}</p>{% endif %}
+    </div>
+    {% if trip.owner.id == current_user.id %}
+      <form method="POST" action="{{ url_for('trips.delete_trip', trip_id=trip.id) }}"
+            onsubmit="return confirm('Delete this trip?')">
+        <button type="submit" class="btn-danger btn-small">
+          {% if current_lang == 'pt_BR' %}Excluir{% else %}Delete Trip{% endif %}
+        </button>
+      </form>
+    {% endif %}
+  </div>
+
+  <!-- RSVP Summary -->
+  <div class="rsvp-summary">
+    <span class="rsvp-count">👥 {{ trip.rsvp_count }} / {{ trip.max_guests }}</span>
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: {{ [(trip.rsvp_count / trip.max_guests * 100), 100] | min | round }}%"></div>
+    </div>
+    <span class="rsvp-spots {% if trip.spots_left == 0 %}rsvp-spots--full{% endif %}">
+      {% if trip.spots_left == 0 %}
+        {% if current_lang == 'pt_BR' %}Lotado!{% else %}Fully booked!{% endif %}
+      {% else %}
+        {{ trip.spots_left }} {% if current_lang == 'pt_BR' %}vagas restantes{% else %}spots remaining{% endif %}
+      {% endif %}
+    </span>
+  </div>
+
+  <!-- RSVP Form -->
+  {% if trip.spots_left > 0 %}
+  <div class="card-form">
+    <h2 class="section-title">
+      {% if current_lang == 'pt_BR' %}Adicionar RSVP{% else %}Add an RSVP{% endif %}
+    </h2>
+    <form method="POST" action="{{ url_for('rsvp.add_rsvp', trip_id=trip.id) }}" novalidate>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="guest_name">
+            {% if current_lang == 'pt_BR' %}Nome do Convidado{% else %}Guest Name{% endif %}
+          </label>
+          <input class="field-input" type="text" id="guest_name" name="guest_name"
+                 placeholder="Full name" required />
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="guest_email">Email
+            <span class="label-optional">({% if current_lang == 'pt_BR' %}opcional{% else %}optional{% endif %})</span>
+          </label>
+          <input class="field-input" type="email" id="guest_email" name="guest_email"
+                 placeholder="guest@email.com" />
+        </div>
+      </div>
+      <button type="submit" class="btn-primary btn-small">
+        {% if current_lang == 'pt_BR' %}Confirmar Presença{% else %}Confirm RSVP{% endif %} →
+      </button>
+    </form>
+  </div>
+  {% endif %}
+
+  <!-- Guest List -->
+  <section class="section">
+    <h2 class="section-title">
+      {% if current_lang == 'pt_BR' %}Lista de Convidados{% else %}Guest List{% endif %}
+    </h2>
+    {% if trip.rsvps %}
+      <div class="guest-list">
+        {% for rsvp in trip.rsvps %}
+          <div class="guest-row">
+            <span class="guest-avatar">{{ rsvp.guest_name[0].upper() }}</span>
+            <div class="guest-info">
+              <span class="guest-name">{{ rsvp.guest_name }}</span>
+              {% if rsvp.guest_email %}<span class="guest-email">{{ rsvp.guest_email }}</span>{% endif %}
+            </div>
+            {% if trip.owner.id == current_user.id %}
+              <form method="POST" action="{{ url_for('rsvp.remove_rsvp', rsvp_id=rsvp.id) }}">
+                <button type="submit" class="btn-ghost btn-small btn-icon" title="Remove">✕</button>
+              </form>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state empty-state--small">
+        <p>{% if current_lang == 'pt_BR' %}Nenhum convidado ainda.{% else %}No guests yet. Be the first!{% endif %}</p>
+      </div>
+    {% endif %}
+  </section>
+</div>
+
+{% endblock %}

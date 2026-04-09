@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}TravelBuddy{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+{% if current_user.is_authenticated %}
+<nav class="navbar">
+  <a href="{{ url_for('trips.dashboard') }}" class="nav-brand">
+    <span class="brand-icon">✈</span> TravelBuddy
+  </a>
+  <div class="nav-links">
+    <a href="{{ url_for('trips.dashboard') }}" class="nav-link">Dashboard</a>
+    <a href="{{ url_for('trips.create_trip') }}" class="nav-link nav-link--accent">+ New Trip</a>
+    <div class="lang-switcher">
+      {% for code, label in supported_languages.items() %}
+        <a href="{{ url_for('lang.set_language', lang=code) }}"
+           class="lang-btn {% if current_lang == code %}lang-btn--active{% endif %}">
+          {{ code[:2].upper() }}
+        </a>
+      {% endfor %}
+    </div>
+    <a href="{{ url_for('auth.logout') }}" class="nav-link nav-link--muted">Logout</a>
+  </div>
+</nav>
+{% endif %}
+
+<main class="main-content">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-stack">
+        {% for category, message in messages %}
+          <div class="flash flash--{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  <span>TravelBuddy MVP &copy; 2026</span>
+  <div class="footer-lang">
+    {% for code, label in supported_languages.items() %}
+      <a href="{{ url_for('lang.set_language', lang=code) }}"
+         class="lang-btn {% if current_lang == code %}lang-btn--active{% endif %}">
+        {{ label }}
+      </a>
+    {% endfor %}
+  </div>
+</footer>
+
+</body>
+</html>
